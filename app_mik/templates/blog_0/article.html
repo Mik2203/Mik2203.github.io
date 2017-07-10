@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{#<!DOCTYPE html>#}
+{#<html lang="ru">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Статья</title>#}
+{#</head>#}
+{#<body>#}
+{% block article %}
+    <style>
+        mik {
+            background-color: maroon; /* Цвет фона под текстом параграфа */
+            color: white; /* Цвет текста */
+        }
+    </style>
+<h4>Дата публикации: {{ article.article_date }}</h4>
+<h2>{{ article.article_title }}</h2>
+    <div>
+        {% if article.article_image %}
+            <p> <img src="{{MEDIA_URL}}{{ article.article_image.url }}" width="200px" height="200px"></p>
+        {% endif %}
+    </div>
+<p>{{ article.article_text }}</p>
+
+<hr>
+    <div class="large-offset-1 large-8 columns"
+        <p>Комментарии:</p>
+        <div height="1" style="border-bottom: 1px dotted #000033; "></div>
+        {% for comment in comments%}
+{#            <p>коментарий от: <br>{{ comment.comments_article.id }} в [#}
+{#                {{ article.article_date }}]<br>{{ comment.comments_text }}</p>#}
+            <p>{{ comment.comments_text }}</p>
+            <p align="right"> [{{ comment.comments_author.username}}] - {{comment.comments_date}}</p>
+            <div height="1" style="border-bottom: 1px dotted #000033; "></div>
+        {% endfor %}
+
+            {% if username %}
+            <form action="/articles/addcomment/{{ article.id }}/" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" class="button" value="Добавить комментарий">
+            </form>
+            {% else %}
+                <hr>
+                Чтобы добавить комментарий <mik>(<a href="/auth/login/">Авторизуйтесь!</a>)</mik>
+            {% endif %}
+    </div>
+{% endblock %}
+
+{#</body>#}
+{#</html>#}

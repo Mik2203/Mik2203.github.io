@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{#<!DOCTYPE html>#}
+{#<html lang="ru">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Стена</title>#}
+{#</head>#}
+{#<body>#}
+{% block article %}
+    <div class="large-8 columns"
+    {% for article in articles %}
+        <h6>Дата публикации: {{ article.article_date }}</h6>
+        <h4><a href="/articles/get/{{ article.id }}">{{ article.article_title }}</a></h4>
+        <p>{{ article.article_text }}</p>
+        <p><a href="/articles/addlike/{{ article.id }}/"><img src="{% static 'images/images.jpg' %}" width="25px"
+                                                              height="25px"></a>{{ article.article_likes }}</p>
+        <hr> {#Линия в низу#}
+    {% endfor %}
+    </div>
+{#    <div class="row">#}
+{#        <div class="large-3 large-offset-5 columns">#}
+{#            <ul class="pagination">#}
+{#                {% if articles.has_previous %}#}
+{#                <li class="arrow"><a href="/page/{{ articles.previous_page_number }}/">&laquo;</a></li>#}
+{#                {% else %}#}
+{#                <li class="arrow unavailable"><a href="">&laquo;</a></li>#}
+{#                {% endif %}#}
+{#                {% for page in articles.paginator.page_range %}#}
+{#                    {% if page == articles.number %}#}
+{#                        <li class="current"><span class="show-for-sr"><a href="/page/{{ page }}/"></a></span>{{ page }}#}
+{#                        </li>#}
+{#                    {% else %}#}
+{#                        <li><a href="/page/{{ page }}/" aria-label="{{ page }}">{{ page }}</a></li>#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+{#                {% if articles.has_next %}#}
+{#                    <li><a href="/page/{{ articles.next_page_number }}/" aria-label="Next page">Next</a></li>#}
+{#                {% else %}#}
+{#                    <li><a href="#" aria-label="Next page">Next</a></li>#}
+{#                {% endif %}#}
+{#            </ul>#}
+{#        </div>#}
+{#    </div>#}
+    <div class="row columns">
+        <div class="large-16 large-offset-5 columns">
+            <ul class="pagination" role="navigation" aria-label="Pagination">
+                {% if articles.has_previous %}
+                    <li class="disabled"><a href="/page/{{ articles.previous_page_number }}/">Назад</a></li>
+                {% else %}
+                    <li class="disabled"><a href="#">{# Домой #}</a></li>
+                {% endif %}
+                {% for page in articles.paginator.page_range %}
+                    {% if page == articles.number %}
+                       <li class="current"><span class="show-for-sr"><a href="/page/{{ page }}/" ></a></span>{{ page }}</li>
+                    {% else %}
+                      <li><a href="/page/{{ page }}/" aria-label="{{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if articles.has_next %}
+                    <li><a href="/page/{{ articles.next_page_number }}/" aria-label="Next page">Следующая</a></li>
+                {% else %}
+                 <li><a href="#" aria-label="Next page">...</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{#</body>#}
+{#</html>#}

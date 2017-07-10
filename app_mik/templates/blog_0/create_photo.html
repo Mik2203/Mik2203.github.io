@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+
+{% block article %}
+    <style>
+        mik {
+            background-color: maroon; /* Цвет фона под текстом параграфа */
+            color: white; /* Цвет текста */
+        }
+    </style>
+{#    {% if username %}#}
+{#        <div>#}
+{#            {% if article.article_image %}#}
+{#                <p> <img src="{{MEDIA_URL}}{{ article.article_image.url }}" width="200px" height="200px"></p>#}
+{#            {% endif %}#}
+{#        </div>#}
+        <div class='col-sm-6 col-sm-offset-3'>
+            <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+                {{ form_img.as_p }}
+                <input type='submit' class='btn btn-default' value='Добавить статью'/>
+            </form>
+        </div>
+{#    {% else %}#}
+{#        <hr>#}
+{#        Чтобы добавитькомментарий#}
+{#        <mik>(<a href="/auth/login/">Авторизуйтесь!</a>)</mik>#}
+{#    {% endif %}#}
+{% endblock %}
